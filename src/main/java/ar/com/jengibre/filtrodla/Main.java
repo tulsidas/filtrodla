@@ -123,7 +123,7 @@ public class Main {
         XSSFRow row = sheet.getRow(r);
 
         cellValue(row.getCell(0)).ifPresent(title -> {
-          cellValue(row.getCell(6)).ifPresent(media -> {
+          cellValue(row.getCell(7)).ifPresent(media -> {
             if (media.toLowerCase().startsWith(prefijo)) {
               ret.add(title);
             }
