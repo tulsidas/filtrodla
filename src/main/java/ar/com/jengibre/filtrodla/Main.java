@@ -72,6 +72,7 @@ public class Main {
 
     for (Sheet sheet : reverseSheets) {
       int colObservaciones = getColumn(sheet.getRow(0), "observaciones");
+      int colEntregado = getColumn(sheet.getRow(0), "entregado");
 
       for (Row row : sheet) {
         Cell filmTitleCell = row.getCell(2); // columna C - film title
@@ -82,9 +83,10 @@ public class Main {
             String sheetName = sheet.getSheetName();
             int rowNum = row.getRowNum() + 1;
             String media = cellValue(cell).orElse("");
-            String obs = colObservaciones == -1 ? "" : cellValue(row.getCell(colObservaciones)).orElse("");
+            String entregado = colEntregado == -1 ? "" : cellValue(row.getCell(colEntregado)).orElse("");
+            String observaciones = colObservaciones == -1 ? "" : cellValue(row.getCell(colObservaciones)).orElse("");
 
-            pelis.add(new Peli(sheetName, rowNum, media, obs));
+            pelis.add(new Peli(sheetName, rowNum, media, entregado, observaciones));
           }
         });
       }
@@ -136,20 +138,21 @@ public class Main {
   }
 
   static class Peli {
-    String sheet, ma, observaciones;
+    String sheet, ma, entregado, observaciones;
 
     int row;
 
-    public Peli(String sheet, int row, String ma, String observaciones) {
+    public Peli(String sheet, int row, String ma, String entregado, String observaciones) {
       this.sheet = sheet;
       this.row = row;
       this.ma = ma;
+      this.entregado = entregado;
       this.observaciones = observaciones;
     }
 
     @Override
     public String toString() {
-      return sheet + DELIM + row + DELIM + ma + DELIM + observaciones;
+      return sheet + DELIM + row + DELIM + ma + DELIM + entregado + DELIM + observaciones;
     }
   }
 }
