@@ -25,11 +25,17 @@ public class MEC {
 
   private static final NumberFormat NF = new DecimalFormat("0.#");
 
+  private static XSSFCellStyle FONDO_BLANCO;
+
   public static void run(String filtro, String plani) throws Exception {
     XSSFWorkbook peliculas = new XSSFWorkbook(new FileInputStream(plani));
 
     XSSFWorkbook out = new XSSFWorkbook();
     XSSFSheet outSheet = out.createSheet();
+
+    FONDO_BLANCO = outSheet.getWorkbook().createCellStyle();
+    FONDO_BLANCO.setFillForegroundColor(IndexedColors.WHITE.index);
+    FONDO_BLANCO.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
     try (XSSFWorkbook reprocesamiento = new XSSFWorkbook(new FileInputStream(filtro))) {
       XSSFSheet sheet = reprocesamiento.getSheetAt(0);
@@ -65,8 +71,7 @@ public class MEC {
             if (filmTitle.equalsIgnoreCase(titulo)) {
               String sheetName = sheet.getSheetName();
 
-              System.out.println(
-                  titulo + " encontrada en " + sheetName);
+              System.out.println(titulo + " encontrada en " + sheetName);
 
               XSSFRow newRow = outSheet.createRow(rowBusqueda.getRowNum());
 
@@ -82,15 +87,15 @@ public class MEC {
                   continue;
                 }
 
-                XSSFCellStyle style = outSheet.getWorkbook().createCellStyle();
                 if (oldCell.getCellStyle().getFillForegroundXSSFColor() == null) {
-                  style.setFillForegroundColor(IndexedColors.WHITE.index);
+                  newCell.setCellStyle(FONDO_BLANCO);
                 }
                 else {
+                  XSSFCellStyle style = outSheet.getWorkbook().createCellStyle();
                   style.setFillForegroundColor(oldCell.getCellStyle().getFillForegroundXSSFColor());
+                  style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                  newCell.setCellStyle(style);
                 }
-                style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-                newCell.setCellStyle(style);
 
                 // Set the cell data value
                 switch (oldCell.getCellType()) {
