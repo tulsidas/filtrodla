@@ -12,6 +12,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     if (args.length < 3) {
       usage();
+      System.exit(1);
     }
 
     if ("superflash".equals(args[0])) {
