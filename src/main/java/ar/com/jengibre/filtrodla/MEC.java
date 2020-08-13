@@ -124,7 +124,7 @@ public class MEC {
 
               // en la O Comentarios Laboratorio
               newRow.createCell(14, CellType.STRING)
-                  .setCellValue(rowBusqueda.getCell(3).getStringCellValue());
+                  .setCellValue(cellValue(rowBusqueda.getCell(3)).orElse("**TITULO PELI NO ES NUMERO NI TEXTO**"));
 
               break sheet;
             }
