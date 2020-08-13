@@ -32,7 +32,7 @@ public class MEC {
     XSSFSheet outSheet = out.createSheet();
 
     try (XSSFWorkbook reprocesamiento = new XSSFWorkbook(new FileInputStream(filtro))) {
-      XSSFSheet sheet = reprocesamiento.getSheet("reporte 30-6");
+      XSSFSheet sheet = reprocesamiento.getSheetAt(0);
       Iterator<Row> iterator = sheet.iterator();
       iterator.next(); // salteo la primera
 
